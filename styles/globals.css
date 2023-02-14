@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base{
+
+    body{
+        /* @apply overflow-x-hidden */
+    }
+    li{
+        @apply font-bold text-3xl p-8 cursor-pointer lg:text-lg lg:p-0 lg:font-normal
+    }
+}
