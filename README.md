@@ -4,5 +4,4 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This is a Next.Js E-Commerce Project UI.
 
-### Layout
 
