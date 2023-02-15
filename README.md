@@ -6,9 +6,3 @@ This is a Next.Js E-Commerce Project UI.
 
 ### Layout
 
-This project has 4 pages.
-
-- Home Page
-- Product Page with unique product ID
-- Cart Page accessible through clicking on the cart button or going to the slug: /products/1
-- Orders page after successfull checkout
