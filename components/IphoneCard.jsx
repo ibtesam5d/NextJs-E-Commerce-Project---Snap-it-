@@ -1,13 +1,15 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-const IphoneCard = () => {
+const IphoneCard = ({iphoneCase}) => {
   return (
     <div className='p-4 lg:w-[30%] lg:text-center'>
-        <Image src="/images/iphone2.jpg" width={500} height={500} className="rounded-3xl" />
-        <p className='text-lg pt-2'>$24.99</p>
-        <h2 className='text-2xl font-medium'>Cyberpunk Skyscraper</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, ut!</p>
+      <Link href={`/product/${iphoneCase._id}`}><Image src={iphoneCase.image} width={500} height={500} alt="iphone case" className="rounded-3xl" /></Link>
+        
+        <p className='text-lg pt-2'>${iphoneCase.prices[0]}</p>
+        <h2 className='text-2xl font-medium'>{iphoneCase.title}</h2>
+        <p>{iphoneCase.desc}</p>
     </div>
   )
 }

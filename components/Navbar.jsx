@@ -4,6 +4,7 @@ import { MdCall } from "react-icons/md";
 import { BsCart3 } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import logo from "../public/images/logo.png"
+import Link from 'next/link';
 
 const Navbar = () => {
 
@@ -18,7 +19,8 @@ const Navbar = () => {
         <div className='flex justify-between items-center relative w-full h-full'>
             {/* =======logo======== */}
             <div className="relative">
-                <Image src={logo} width={70} height={70} className='object-contain'/>
+                <Link href={"/"}><Image src={logo} alt="logo" width={70} height={70} className='object-contain'/></Link>
+                
             </div>
 
             {/* =======order======== */}
@@ -35,7 +37,7 @@ const Navbar = () => {
             {/* ======= lg device nav links ======== */}
             <div className="hidden text-white lg:flex">
                 <ul className='flex justify-between items-center w-[400px]'>
-                    <li>Home</li>
+                    <li><Link href={"/"}>Home</Link></li>
                     <li>Shop</li>
                     <li>Orders</li>
                     <li>About</li>
@@ -56,7 +58,7 @@ const Navbar = () => {
             {/* ======= nav links ======== */}
             <div className={nav? "lg:hidden fixed top-0 left-0 text-white bg-gray-900/90 w-full h-screen flex-col z-[100] px-4 py-7 ease-in-out duration-300": "absolute top-0 h-full right-[-100%]"}>
             <ul className='flex flex-col w-full h-full justify-center items-center'>
-                    <li>Home</li>
+                    <li onClick={()=>setNav(false)}><Link href={"/"}>Home</Link></li>
                     <li>Shop</li>
                     <li>Orders</li>
                     <li>About</li>
