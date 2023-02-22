@@ -23,8 +23,14 @@ const productSchema = new Schema(
       required: true,
     },
     materialType: {
-      type: String,
-      required: true,
+      type: [
+        {
+          text: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
     },
   },
   { timestamps: true }
