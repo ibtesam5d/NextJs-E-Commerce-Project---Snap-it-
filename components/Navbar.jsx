@@ -5,8 +5,11 @@ import { BsCart3 } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import logo from "../public/images/logo.png"
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+
+    const quantity = useSelector(state=>state.cart.quantity)
 
     const [nav, setNav] = useState(false)
 
@@ -49,7 +52,9 @@ const Navbar = () => {
                 <Link href={"/cart"}>
                 <BsCart3 className='text-gray-900 ' size={25} />
                 </Link>
-                <div className="absolute top-[-15px] left-[20px] bg-red-500 text-white rounded-full font-bold text-base px-2">1</div>
+
+                {/* == quantity == */}
+                <div className="absolute top-[-15px] left-[20px] bg-red-500 text-white rounded-full font-bold text-base px-2">{quantity}</div>
             </div>
 
             {/* =======menu button======== */}
