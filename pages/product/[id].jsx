@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 const Product = ({iphoneCase}) => {
     const [index, setIndex] = useState(0)
 
-    console.log(iphoneCase.materialType);
 
   return (
     <div className='w-full h-full lg:h-screen pt-[5rem] flex flex-col px-4 items-center justify-center lg:flex-row lg:items-start'>

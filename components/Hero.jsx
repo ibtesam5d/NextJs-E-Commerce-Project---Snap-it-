@@ -20,7 +20,7 @@ const Hero = () => {
             setIndex(index !== 2 ? index +1 : 0)
         }
 
-        console.log(index)
+        
     }
 
   return (

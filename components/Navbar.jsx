@@ -46,7 +46,9 @@ const Navbar = () => {
 
             {/* =======cart button======== */}
             <div className="bg-white rounded-full p-1 cursor-pointer relative">
+                <Link href={"/cart"}>
                 <BsCart3 className='text-gray-900 ' size={25} />
+                </Link>
                 <div className="absolute top-[-15px] left-[20px] bg-red-500 text-white rounded-full font-bold text-base px-2">1</div>
             </div>
 
