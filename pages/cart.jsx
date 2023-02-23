@@ -7,19 +7,43 @@ import {
     PayPalButtons,
     usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { reset } from '@/redux/cartSlice';
+
+
+
+
 
 const Cart = () => {
+    const cart = useSelector((state)=> state.cart)
     const [open, setOpen] = useState(false)
+    const [cash, setCash] = useState(false)
+    const router = useRouter()
+    const dispatch = useDispatch()
 
     // This values are the props in the UI
-    const amount = "2";
+    const amount = cart.total;
     const currency = "USD";
     const style = {"layout":"vertical"};
 
+    const createOrder = async (data)=>{
+
+        try {
+            const res = await axios.post("http://localhost:3000/api/orders", data)
+
+            res.status === 201 && router.push("/orders/" + await res.data._id)
+
+            dispatch(reset())
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     // Custom component to wrap the PayPalButtons and handle currency changes
     const ButtonWrapper = ({ currency, showSpinner }) => {
-    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-    // This is the main reason to wrap the PayPalButtons in a new component
+   
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
     useEffect(() => {
@@ -59,7 +83,15 @@ const Cart = () => {
                 }}
                 onApprove={function (data, actions) {
                     return actions.order.capture().then(function (details) {
-                        console.log(details);
+                        const shipping = details.purchase_units[0].shipping
+
+                        createOrder({
+                            customer:shipping.name.full_name,
+                            address:shipping.address.address_line_1,
+                            total:cart.total,
+                            method:1,
+
+                        })
                     });
                 }}
             />
@@ -67,8 +99,8 @@ const Cart = () => {
     );
     }
 
-    const dispatch = useDispatch()
-    const cart = useSelector((state)=> state.cart)
+    
+    
   return (
     <div className='h-full mb-[6.9rem] w-full text-gray-900 mt-[5rem] flex justify-between flex-col p-[40px] lg:flex-row lg:mb-[14rem]'>
         {/* left side */}
@@ -120,7 +152,7 @@ const Cart = () => {
 
                 {open ? (<div> 
 
-                <button className='bg-white text-gray-900 mt-2 py-2 px-4 w-full rounded-md font-medium uppercase mb-4'>Cash On Delivery</button>    
+                <button className='bg-white text-gray-900 mt-2 py-2 px-4 w-full rounded-md font-medium uppercase mb-4' onClick={()=>setCash(true)}>Cash On Delivery</button>    
                 <PayPalScriptProvider
                 options={{
                     "client-id": "AX3P9ytZ8Tho6zA3nWTUOVKIdT5sjJwAak4Ng8pr3zZCjw-2zNbcigQdtowuvGumViGX3T8V_S7Mc1Lb",

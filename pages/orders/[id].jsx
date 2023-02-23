@@ -1,8 +1,9 @@
 import {MdReceiptLong,MdMapsHomeWork} from "react-icons/md"
 import {AiFillCheckCircle,AiFillCar} from "react-icons/ai"
 import {BiTimeFive} from "react-icons/bi"
+import axios from "axios"
 
-const Orders = () => {
+const Orders = ({order}) => {
   return (
     <div className='h-full lg:h-screen mb-16 w-full text-gray-900 mt-[5rem] flex justify-between flex-col p-[30px] lg:flex-row'>
         {/* left */}
@@ -11,10 +12,10 @@ const Orders = () => {
             <div className="">
             
                 <div className="text-center">
-                    <p className="py-2"><span className="font-semibold"> Order Id:</span> 12345666</p>
-                    <p className="py-2"><span className="font-semibold"> Customer:</span> John Doe</p>
-                    <p className="py-2"><span className="font-semibold"> Address:</span> 123 12st CA</p>
-                    <p className="py-2"><span className="font-semibold"> Total:</span> $24.99</p>
+                    <p className="py-2"><span className="font-semibold"> Order Id:</span> {order._id}</p>
+                    <p className="py-2"><span className="font-semibold"> Customer:</span> {order.customer} </p>
+                    <p className="py-2"><span className="font-semibold"> Address:</span> {order.address}</p>
+                    <p className="py-2"><span className="font-semibold"> Total:</span> ${order.total}</p>
                 </div>
             </div>
             {/* 2nd row - status */}
@@ -50,13 +51,13 @@ const Orders = () => {
             <div className="flex flex-col justify-between max-h-[300px] bg-gray-900 text-white p-8">
                 <h2 className='text-3xl font-semibold mb-2 text-center'>Cart Total</h2>
                 <div className="">
-                    <strong  className='mr-2'>Sub-total:</strong>$24.99
+                    <strong  className='mr-2'>Sub-total:</strong>${order.total}
                 </div>
                 <div className="">
                     <strong className='mr-2'>Discount:</strong>$0
                 </div>
                 <div className="">
-                    <strong className='mr-2'>Total:</strong>$24.99
+                    <strong className='mr-2'>Total:</strong>${order.total}
                 </div>
 
                 <button disabled className='bg-white text-teal-500 mt-2 py-2 px-4 w-full rounded-xl font-bold uppercase'>Paid</button>
@@ -68,3 +69,14 @@ const Orders = () => {
 }
 
 export default Orders   
+
+
+export const getServerSideProps = async ({params}) => {
+    const res = await axios.get(`http://localhost:3000/api/orders/${params.id}`);
+  
+    return {
+      props: {
+        order: await res.data,
+      },
+    };
+  };
