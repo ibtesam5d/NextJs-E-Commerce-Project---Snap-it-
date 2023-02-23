@@ -5,7 +5,7 @@ import {BsFacebook, BsInstagram,BsTwitter,BsPinterest} from "react-icons/bs"
 
 const Footer = () => {
   return (
-    <div className="bg-gray-900 p-4 text-white h-full ">
+    <div className="bg-gray-900 p-4 text-white">
     <div className='w-full flex flex-col justify-center items-center lg:px-6  gap-4 lg:flex-row lg:justify-between'>
       <div className="flex flex-col justify-center items-center">
         <Image src="/images/logo.png" width={80} height={80} />
