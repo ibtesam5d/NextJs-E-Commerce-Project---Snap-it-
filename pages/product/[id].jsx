@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 const Product = ({iphoneCase}) => {
     const [price, setPrice] = useState(iphoneCase.prices[0])
-    const [materialType, setMaterialType] = useState("")
+    const [materialType, setMaterialType] = useState("Matte")
     const [size, setSize] = useState("Regular")
     const [amount, setAmount] = useState("1")
 

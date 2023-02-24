@@ -60,7 +60,7 @@ const Orders = ({order}) => {
                     <strong className='mr-2'>Total:</strong>${order.total}
                 </div>
 
-                <button disabled className='bg-white text-teal-500 mt-2 py-2 px-4 w-full rounded-xl font-bold uppercase'>Paid</button>
+                <button disabled className='bg-white text-teal-500 mt-2 py-2 px-4 w-full rounded-xl font-bold uppercase'>{order.method === 0 ? "Cash On Delivery" : "PAID"}</button>
 
             </div>
         </div>

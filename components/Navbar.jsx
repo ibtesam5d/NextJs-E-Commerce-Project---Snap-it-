@@ -18,7 +18,7 @@ const Navbar = () => {
     }
 
   return (
-    <nav className='fixed top-0 w-full bg-gray-900 text-white p-4 h-20 z-[99]'>
+    <nav className='fixed top-0 w-full bg-gray-900 text-white p-4 h-20 z-[999]'>
         <div className='flex justify-between items-center relative w-full h-full'>
             {/* =======logo======== */}
             <div className="relative">
