@@ -3,10 +3,15 @@ import { Inter } from "@next/font/google";
 import Hero from "@/components/Hero";
 import IphoneLists from "@/components/IphoneLists";
 import axios from "axios";
+import { useState } from "react";
+import AddProduct from "@/components/AddProduct";
+import AddButton from "@/components/AddButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ iphoneList }) {
+export default function Home({ iphoneList, admin }) {
+  const [close, setClose] = useState(true);
+
   return (
     <>
       <Head>
@@ -19,17 +24,27 @@ export default function Home({ iphoneList }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
+      {admin && <AddButton setClose={setClose} />}
       <IphoneLists iphoneList={iphoneList} />
+      {!close && <AddProduct setClose={setClose} />}
     </>
   );
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
+  const myCookie = ctx.req?.cookies || "";
+  let admin = false;
+
+  if (myCookie.token === process.env.TOKEN) {
+    admin = true;
+  }
+
   const res = await axios.get("http://localhost:3000/api/products");
 
   return {
     props: {
       iphoneList: await res.data,
+      admin,
     },
   };
 };
