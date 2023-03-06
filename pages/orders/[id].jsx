@@ -71,17 +71,14 @@ const Orders = ({order}) => {
 export default Orders   
 
 
-export const getServerSideProps = async ({params,res}) => {
-    const resp = await axios.get(`https://snap-it-ibtesam5d.vercel.app/api/orders/${params.id}`);
+export const getServerSideProps = async ({params}) => {
+    const res = await axios.get(`/api/orders/${params.id}`);
 
-    res.setHeader(
-        "Cache-Control",
-        "public, s-maxage=10, stale-while-revalidate=59"
-      );
+    
   
     return {
       props: {
-        order: await resp.data,
+        order: await res.data,
       },
     };
   };

@@ -108,17 +108,14 @@ const Product = ({iphoneCase}) => {
 
 export default Product
 
-export const getServerSideProps = async ({params, res}) => {
-    const resp = await axios.get(`https://snap-it-ibtesam5d.vercel.app/api/products/${params.id}`);
+export const getServerSideProps = async ({params}) => {
+    const res = await axios.get(`/api/products/${params.id}`);
 
-    res.setHeader(
-        "Cache-Control",
-        "public, s-maxage=10, stale-while-revalidate=59"
-      );
+    
   
     return {
       props: {
-        iphoneCase: await resp.data,
+        iphoneCase: await res.data,
       },
     };
   };

@@ -39,14 +39,8 @@ export const getServerSideProps = async (ctx) => {
     admin = true;
   }
 
-  const res = await axios.get(
-    "https://snap-it-ibtesam5d.vercel.app/api/products"
-  );
+  const res = await axios.get("/api/products");
 
-  ctx.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
   return {
     props: {
       iphoneList: await res.data,

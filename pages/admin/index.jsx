@@ -13,7 +13,7 @@ const Index = ({productList, orderList}) => {
 
     const handleDelete = async(id)=>{
         try {
-            const res = await axios.delete("https://snap-it-ibtesam5d.vercel.app/api/products/"+id)
+            const res = await axios.delete("/api/products/"+id)
             setProducts(products.filter(product=> product._id !== id))
         } catch (error) {
             console.log(error);
@@ -26,7 +26,7 @@ const Index = ({productList, orderList}) => {
 
         try {
             
-            const res = await axios.put("https://snap-it-ibtesam5d.vercel.app/api/orders/"+id,{
+            const res = await axios.put("/api/orders/"+id,{
                 status:currentItem.status === 2 ? 0 : currentItem.status+1,
             })
             setOrders([
@@ -127,8 +127,8 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    const productRes = await axios.get("https://snap-it-ibtesam5d.vercel.app/api/products");
-    const orderRes = await axios.get("https://snap-it-ibtesam5d.vercel.app/api/orders");
+    const productRes = await axios.get("/api/products");
+    const orderRes = await axios.get("/api/orders");
   
     return {
       props: {
