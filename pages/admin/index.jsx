@@ -8,6 +8,7 @@ const Index = ({productList, orderList}) => {
     const [products, setProducts] = useState(productList)
     const [orders, setOrders] = useState(orderList)
     const status = ["preparing", "on the way", "delivered"]
+   
     
 
     const handleDelete = async(id)=>{
@@ -21,11 +22,12 @@ const Index = ({productList, orderList}) => {
 
     const handleStatus = async (id)=>{
         const currentItem = orders.filter(order=> order._id === id)[0]
-        const currentStatus = currentItem.status
+        
 
         try {
+            
             const res = await axios.put("http://localhost:3000/api/orders/"+id,{
-                status:currentStatus +1,
+                status:currentItem.status === 2 ? 0 : currentItem.status+1,
             })
             setOrders([
                 res.data,
