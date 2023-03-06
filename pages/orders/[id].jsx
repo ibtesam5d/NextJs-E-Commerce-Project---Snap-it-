@@ -72,7 +72,7 @@ export default Orders
 
 
 export const getServerSideProps = async ({params}) => {
-    const res = await axios.get(`http://localhost:3000/api/orders/${params.id}`);
+    const res = await axios.get(`https://snap-it.vercel.app/api/orders/${params.id}`);
   
     return {
       props: {
