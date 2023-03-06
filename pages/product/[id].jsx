@@ -1,10 +1,12 @@
+import dbConnect from '@/lib/mongo'
+import Product from "@/models/Product";
 import { addProduct } from '@/redux/cartSlice'
 import axios from 'axios'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-const Product = ({iphoneCase}) => {
+const SingleProduct = ({iphoneCase}) => {
     const [price, setPrice] = useState(iphoneCase.prices[0])
     const [materialType, setMaterialType] = useState("Matte")
     const [size, setSize] = useState("Regular")
@@ -106,19 +108,33 @@ const Product = ({iphoneCase}) => {
   )
 }
 
-export default Product
+export default SingleProduct
 
-export const getServerSideProps = async ({params, res}) => {
-    const resp = await axios.get(`https://snap-it-ibtesam5d.vercel.app/api/products/${params.id}`);
+export const getServerSideProps = async ({params}) => {
 
-    res.setHeader(
-        "Cache-Control",
-        "public, s-maxage=10, stale-while-revalidate=59"
-      );
-  
-    return {
-      props: {
-        iphoneCase: await resp.data,
-      },
-    };
+    try {
+        console.log("connecting to database");
+    
+        dbConnect()
+    
+        console.log("connected to database");
+    
+        console.log("fetching data");
+    
+        const product = await Product.findById(params.id)
+    
+        console.log("fetched data");
+    
+        return {
+          props: {
+            iphoneCase: JSON.parse(JSON.stringify(product)),
+          },
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          notFound: true,
+        };
+      }
+
   };

@@ -22,7 +22,7 @@ const Navbar = () => {
         <div className='flex justify-between items-center relative w-full h-full'>
             {/* =======logo======== */}
             <div className="relative">
-                <Link href={"/"}><Image src={logo} alt="logo" width={70} height={70} className='object-contain'/></Link>
+                <Link href="/"><Image src={logo} alt="logo" width={70} height={70} className='object-contain'/></Link>
                 
             </div>
 

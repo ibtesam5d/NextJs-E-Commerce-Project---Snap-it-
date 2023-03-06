@@ -35,7 +35,7 @@ const Hero = () => {
                 {images.map((img, index)=>{
                     return(
                         <div className="relative w-full h-[100%]" key={index}>
-                            <Image className="object-contain" src={img} fill alt="main hero image"/>
+                            <Image className="object-contain" src={img} fill={true} priority alt="hero-image"/>
                         </div>
                     )
                     
