@@ -72,7 +72,7 @@ export default Orders
 
 
 export const getServerSideProps = async ({params,res}) => {
-    const resp = await axios.get(`https://snap-jt1vcwk1p-ibtesam5d.vercel.app/api/orders/${params.id}`);
+    const resp = await axios.get(`https://snap-it-ibtesam5d.vercel.app/api/orders/${params.id}`);
 
     res.setHeader(
         "Cache-Control",

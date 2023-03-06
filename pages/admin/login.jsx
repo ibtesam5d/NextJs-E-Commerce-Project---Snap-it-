@@ -11,7 +11,7 @@ const Login = () => {
 
     const handleClick = async()=>{
         try {
-            await axios.post("https://snap-jt1vcwk1p-ibtesam5d.vercel.app/api/login",{
+            await axios.post("https://snap-it-ibtesam5d.vercel.app/api/login",{
                 username,password
             })
             router.push("/admin")

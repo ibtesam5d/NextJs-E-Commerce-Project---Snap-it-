@@ -41,7 +41,7 @@ const AddProduct = ({setClose}) => {
                 title,desc,prices,image:url, materialType:material
             }
 
-            await axios.post("https://snap-jt1vcwk1p-ibtesam5d.vercel.app/api/products", newProduct)
+            await axios.post("https://snap-it-ibtesam5d.vercel.app/api/products", newProduct)
             setClose(true)
         } catch (error) {
             console.log(error);

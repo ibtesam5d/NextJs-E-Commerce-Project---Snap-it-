@@ -31,7 +31,7 @@ const Cart = () => {
     const createOrder = async (data)=>{
 
         try {
-            const res = await axios.post("https://snap-jt1vcwk1p-ibtesam5d.vercel.app/api/orders", data)
+            const res = await axios.post("https://snap-it-ibtesam5d.vercel.app/api/orders", data)
 
             res.status === 201 && router.push("/orders/" + await res.data._id)
             setOpen(false)

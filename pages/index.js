@@ -40,7 +40,7 @@ export const getServerSideProps = async (ctx) => {
   }
 
   const res = await axios.get(
-    "https://snap-jt1vcwk1p-ibtesam5d.vercel.app/api/products"
+    "https://snap-it-ibtesam5d.vercel.app/api/products"
   );
 
   ctx.res.setHeader(
