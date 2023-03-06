@@ -2,6 +2,8 @@ import {MdReceiptLong,MdMapsHomeWork} from "react-icons/md"
 import {AiFillCheckCircle,AiFillCar} from "react-icons/ai"
 import {BiTimeFive} from "react-icons/bi"
 import axios from "axios"
+import Order from "@/models/Order"
+import dbConnect from "@/lib/mongo"
 
 const Orders = ({order}) => {
   return (
@@ -72,13 +74,30 @@ export default Orders
 
 
 export const getServerSideProps = async ({params}) => {
-    const res = await axios.get(`/api/orders/${params.id}`);
 
+    try {
+        console.log("connecting to database");
     
+        await dbConnect()
+    
+        console.log("connected to database");
+    
+        console.log("fetching data");
+    
+        const order = await Order.findById(params.id)
+    
+        console.log("fetched data");
+    
+        return {
+          props: {
+            order: JSON.parse(JSON.stringify(order)),
+          },
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          notFound: true,
+        };
+      }
   
-    return {
-      props: {
-        order: await res.data,
-      },
-    };
   };

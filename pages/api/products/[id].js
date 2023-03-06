@@ -7,16 +7,7 @@ export default async function handler(req, res) {
     query: { id },
   } = req;
 
-  dbConnect();
-
-  if (method === "GET") {
-    try {
-      const product = await Product.findById(id);
-      res.status(200).json(product);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }
+  await dbConnect();
 
   if (method === "PUT") {
     try {

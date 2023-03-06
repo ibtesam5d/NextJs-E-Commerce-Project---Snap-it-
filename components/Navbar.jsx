@@ -22,7 +22,7 @@ const Navbar = () => {
         <div className='flex justify-between items-center relative w-full h-full'>
             {/* =======logo======== */}
             <div className="relative">
-                <Link href={"/"}><Image src={logo} alt="logo" width={70} height={70} className='object-contain'/></Link>
+                <Link href="/"><Image src={logo} alt="logo" width={70} height={70} className='object-contain'/></Link>
                 
             </div>
 
@@ -43,7 +43,7 @@ const Navbar = () => {
                     <li><Link href={"/"}>Home</Link></li>
                     <li>Shop</li>
                     <li>Orders</li>
-                    <li>About</li>
+                    <li><Link href={"/admin"}>Admin</Link></li>
                 </ul>
             </div>
 
@@ -67,8 +67,8 @@ const Navbar = () => {
             <ul className='flex flex-col w-full h-full justify-center items-center'>
                     <li onClick={()=>setNav(false)}><Link href={"/"}>Home</Link></li>
                     <li>Shop</li>
-                    <li>Orders</li>
                     <li>About</li>
+                    <li onClick={()=>setNav(false)}><Link href={"/admin"}>Admin</Link></li>
                 </ul>
             </div>
             

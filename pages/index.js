@@ -6,6 +6,8 @@ import axios from "axios";
 import { useState } from "react";
 import AddProduct from "@/components/AddProduct";
 import AddButton from "@/components/AddButton";
+import dbConnect from "@/lib/mongo";
+import Product from "@/models/Product";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,12 +41,29 @@ export const getServerSideProps = async (ctx) => {
     admin = true;
   }
 
-  const res = await axios.get("/api/products");
+  try {
+    console.log("connecting to database");
 
-  return {
-    props: {
-      iphoneList: await res.data,
-      admin,
-    },
-  };
+    await dbConnect();
+
+    console.log("connected to database");
+
+    console.log("fetching data");
+
+    const products = await Product.find();
+
+    console.log("fetched data");
+
+    return {
+      props: {
+        iphoneList: JSON.parse(JSON.stringify(products)),
+        admin,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      notFound: true,
+    };
+  }
 };

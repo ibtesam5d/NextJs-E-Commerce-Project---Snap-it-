@@ -1,10 +1,12 @@
+import dbConnect from '@/lib/mongo'
+import Product from "@/models/Product";
 import { addProduct } from '@/redux/cartSlice'
 import axios from 'axios'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-const Product = ({iphoneCase}) => {
+const SingleProduct = ({iphoneCase}) => {
     const [price, setPrice] = useState(iphoneCase.prices[0])
     const [materialType, setMaterialType] = useState("Matte")
     const [size, setSize] = useState("Regular")
@@ -106,16 +108,33 @@ const Product = ({iphoneCase}) => {
   )
 }
 
-export default Product
+export default SingleProduct
 
 export const getServerSideProps = async ({params}) => {
-    const res = await axios.get(`/api/products/${params.id}`);
 
+    try {
+        console.log("connecting to database");
     
-  
-    return {
-      props: {
-        iphoneCase: await res.data,
-      },
-    };
+        await dbConnect()
+    
+        console.log("connected to database");
+    
+        console.log("fetching data");
+    
+        const product = await Product.findById(params.id)
+    
+        console.log("fetched data");
+    
+        return {
+          props: {
+            iphoneCase: JSON.parse(JSON.stringify(product)),
+          },
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          notFound: true,
+        };
+      }
+
   };
