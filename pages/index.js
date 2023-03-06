@@ -44,7 +44,7 @@ export const getServerSideProps = async (ctx) => {
   try {
     console.log("connecting to database");
 
-    dbConnect();
+    await dbConnect();
 
     console.log("connected to database");
 

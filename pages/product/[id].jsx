@@ -115,7 +115,7 @@ export const getServerSideProps = async ({params}) => {
     try {
         console.log("connecting to database");
     
-        dbConnect()
+        await dbConnect()
     
         console.log("connected to database");
     
