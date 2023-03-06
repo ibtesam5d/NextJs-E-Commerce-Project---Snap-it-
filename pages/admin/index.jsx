@@ -1,4 +1,7 @@
 
+import dbConnect from "@/lib/mongo";
+import Order from "@/models/Order";
+import Product from "@/models/Product";
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
@@ -13,7 +16,7 @@ const Index = ({productList, orderList}) => {
 
     const handleDelete = async(id)=>{
         try {
-            const res = await axios.delete("https://snap-it-ibtesam5d.vercel.app/api/products/"+id)
+            const res = await axios.delete("/api/products/"+id)
             setProducts(products.filter(product=> product._id !== id))
         } catch (error) {
             console.log(error);
@@ -26,7 +29,7 @@ const Index = ({productList, orderList}) => {
 
         try {
             
-            const res = await axios.put("https://snap-it-ibtesam5d.vercel.app/api/orders/"+id,{
+            const res = await axios.put("/api/orders/"+id,{
                 status:currentItem.status === 2 ? 0 : currentItem.status+1,
             })
             setOrders([
@@ -41,7 +44,7 @@ const Index = ({productList, orderList}) => {
 
   return (
 
-        <div className='h-full mb-[6.9rem] w-full text-gray-900 mt-[5rem] flex justify-between flex-col px-[10px] py-[40px] lg:flex-row lg:mb-[14rem] 2xl:p-[50px]'>
+        <div className='h-full mb-[6.9rem] w-full text-gray-900 mt-[5rem] flex justify-between flex-col px-[10px] py-[40px] xl:flex-row 2xl:p-[50px]'>
         
         {/* Left Side - Products */}
             <div className="lg:w-full flex flex-col gap-4 mb-20 px-4">
@@ -49,7 +52,7 @@ const Index = ({productList, orderList}) => {
 
             {/*====== items ======*/}
             {products.map((product)=>{
-                return(<div key={product._id} className="flex flex-col items-center gap-4 lg:flex-row lg:gap-4 lg:flex-grow-0 mb-6">
+                return(<div key={product._id} className="flex flex-col items-center gap-4 xl:flex-row lg:gap-4 xl:flex-grow-0 mb-6">
 
                 <div className="object-contain">
                     <Image src={product.image} width={100} height={100} alt="iphone" className='rounded-xl' />
@@ -79,7 +82,7 @@ const Index = ({productList, orderList}) => {
             {/*====== items ======*/}
 
             {orders.map((order)=>{
-                return(<div key={order._id} className="flex flex-col items-center gap-4 lg:flex-row lg:gap-4 lg:flex-grow-0 mb-6">
+                return(<div key={order._id} className="flex flex-col items-center gap-4 xl:flex-row lg:gap-4 xl:flex-grow-0 mb-6">
 
                 <p><span className='font-semibold'>id</span>{order._id.slice(0,5)}</p>
                 <p className='font-medium text-lg'>{order.customer}</p>
@@ -127,13 +130,32 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    const productRes = await axios.get("https://snap-it-ibtesam5d.vercel.app/api/products");
-    const orderRes = await axios.get("https://snap-it-ibtesam5d.vercel.app/api/orders");
-  
-    return {
-      props: {
-        productList: await productRes.data,
-        orderList: await orderRes.data,
-      },
-    };
+
+    try {
+        console.log("connecting to database");
+    
+        dbConnect();
+    
+        console.log("connected to database");
+    
+        console.log("fetching data");
+    
+        const products = await Product.find();
+        const orders = await Order.find();
+    
+        console.log("fetched data");
+    
+        return {
+          props: {
+            productList: JSON.parse(JSON.stringify(products)),
+            orderList: JSON.parse(JSON.stringify(orders)),
+            
+          },
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          notFound: true,
+        };
+      }
   };

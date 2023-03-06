@@ -2,6 +2,8 @@ import {MdReceiptLong,MdMapsHomeWork} from "react-icons/md"
 import {AiFillCheckCircle,AiFillCar} from "react-icons/ai"
 import {BiTimeFive} from "react-icons/bi"
 import axios from "axios"
+import Order from "@/models/Order"
+import dbConnect from "@/lib/mongo"
 
 const Orders = ({order}) => {
   return (
@@ -71,17 +73,31 @@ const Orders = ({order}) => {
 export default Orders   
 
 
-export const getServerSideProps = async ({params,res}) => {
-    const resp = await axios.get(`https://snap-it-ibtesam5d.vercel.app/api/orders/${params.id}`);
+export const getServerSideProps = async ({params}) => {
 
-    res.setHeader(
-        "Cache-Control",
-        "public, s-maxage=10, stale-while-revalidate=59"
-      );
+    try {
+        console.log("connecting to database");
+    
+        dbConnect()
+    
+        console.log("connected to database");
+    
+        console.log("fetching data");
+    
+        const order = await Order.findById(params.id)
+    
+        console.log("fetched data");
+    
+        return {
+          props: {
+            order: JSON.parse(JSON.stringify(order)),
+          },
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          notFound: true,
+        };
+      }
   
-    return {
-      props: {
-        order: await resp.data,
-      },
-    };
   };
